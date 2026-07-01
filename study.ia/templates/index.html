@@ -66,18 +66,17 @@
             console.error('Error al crear la imagen:', error);
         }
 
-    } else {
+  } else {
         // 3. Si NO dice "dibuja", es un texto normal (Como hablar con Gemini)
         try {
-            const response = await fetch('/preguntar', { 
+            const response = await fetch('/preguntar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ mensaje: texto })
             });
             const data = await response.json();
-            
-            // Aquí puedes poner tu función actual para mostrar texto en el chat
-            // Ejemplo: mostrarTextoEnPantalla(data.respuesta);
+
+            mostrarTextoEnPantalla(data.respuesta);
         } catch (error) {
             console.error('Error en el chat de texto:', error);
         }
@@ -100,4 +99,14 @@ function mostrarImagenEnPantalla(url) {
     chatBox.appendChild(mensajeBot);
     chatBox.scrollTop = chatBox.scrollHeight;
 }
+function mostrarTextoEnPantalla(texto) {
+    const chatBox = document.getElementById('chatBox');
+    const mensajeBot = document.createElement('div');
+    mensajeBot.classList.add('message', 'bot');
+    mensajeBot.textContent = texto;
+    
+    chatBox.appendChild(mensajeBot);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+            
 </script>
