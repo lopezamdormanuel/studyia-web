@@ -27,26 +27,34 @@
   <form class="chat-input-area" id="chatForm" enctype="multipart/form-data">
          <label for="imageInput" style="cursor: pointer; padding: 0 10px; font-size: 1.5rem; display: flex; align-items: center;">📎</label>
 <input type="file" id="imageInput" accept="image/*" style="display: none;">
-            <input type="text" id="userInput" placeholder="Escribe tu pregunta o 'dibuja...' " required autocomplete="off">
-            <button type="submit">Enviar</button>
-        </form>
-        
-        <div id="previewContainer" style="display: none; padding: 10px; background: #fafafa; border-top: 1px solid #eee; text-align: left;">
-           <div id="previewContainer" style="display: none; padding: 10px; background: #fafafa; border-top: 1px solid #eee; text-align: left;">
-    <span style="font-size: 0.8rem; color: #666;">📸 Imagen seleccionada</span>
-    <button type="button" id="clearImage" style="margin-left: 10px; background: none; border: none; color: red; cursor: pointer;">❌ Quitar</button>
+            <input type="text" id="userInput" placeholder="Escribe tu pregunta o 'dibuja...'" required autocomplete="off">
+        <button type="submit">Enviar</button>
+    </form>
+
+    <div id="previewContainer" style="display: none; padding: 10px; background: #fafafa; border-top: 1px solid #eee; text-align: left;">
+        <span style="font-size: 0.8rem; color: #666;">📸 Imagen seleccionada</span>
+        <button type="button" id="clearImage" style="margin-left: 10px; background: none; border: none; color: red; cursor: pointer;">❌ Quitar</button>
+    </div>
 </div>
-    document.getElementById('chatForm').addEventListener('submit', async (e) => {
+
+<script>
+document.getElementById('chatForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const inputDelUsuario = document.getElementById('userInput');
     const texto = inputDelUsuario.value.trim();
-    
+
     if (!texto) return;
 
-    // 1. Limpiar el cuadro de texto para escribir la siguiente pregunta
-    inputDelUsuario.value = ''; 
+    // Pintar tu mensaje en la pantalla
+    const chatBox = document.getElementById('chatBox');
+    const mensajeUsuario = document.createElement('div');
+    mensajeUsuario.classList.add('message', 'user');
+    mensajeUsuario.textContent = texto;
+    chatBox.appendChild(mensajeUsuario);
+    chatBox.scrollTop = chatBox.scrollHeight;
 
+    inputDelUsuario.value = '';
     // 2. ¿El usuario escribió la palabra "dibuja"?
     if (texto.toLowerCase().startsWith('dibuja')) {
         
