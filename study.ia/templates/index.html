@@ -24,50 +24,80 @@
     <div class="chat-header">📚 StudyIA - Panel de Control</div>
     <div class="chat-box" id="chatBox">
         <div class="message bot">¡Hola! Soy StudyIA. ¿En qué puedo ayudarte a estudiar hoy?</div>
-    </div>
-    <form class="chat-input-area" id="chatForm">
-        <input type="text" id="userInput" placeholder="Escribe tu pregunta aquí..." required autocomplete="off">
-        <button type="submit">Enviar</button>
-    </form>
+  <form class="chat-input-area" id="chatForm" enctype="multipart/form-data">
+         <label for="imageInput" style="cursor: pointer; padding: 0 10px; font-size: 1.5rem; display: flex; align-items: center;">📎</label>
+<input type="file" id="imageInput" accept="image/*" style="display: none;">
+            <input type="text" id="userInput" placeholder="Escribe tu pregunta o 'dibuja...' " required autocomplete="off">
+            <button type="submit">Enviar</button>
+        </form>
+        
+        <div id="previewContainer" style="display: none; padding: 10px; background: #fafafa; border-top: 1px solid #eee; text-align: left;">
+           <div id="previewContainer" style="display: none; padding: 10px; background: #fafafa; border-top: 1px solid #eee; text-align: left;">
+    <span style="font-size: 0.8rem; color: #666;">📸 Imagen seleccionada</span>
+    <button type="button" id="clearImage" style="margin-left: 10px; background: none; border: none; color: red; cursor: pointer;">❌ Quitar</button>
 </div>
-
-<script>
     document.getElementById('chatForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const inputDelUsuario = document.getElementById('userInput');
-        const texto = inputDelUsuario.value.trim();
-        if(!texto) return;
+    e.preventDefault();
+    
+    const inputDelUsuario = document.getElementById('userInput');
+    const texto = inputDelUsuario.value.trim();
+    
+    if (!texto) return;
 
-        const chatBox = document.getElementById('chatBox');
+    // 1. Limpiar el cuadro de texto para escribir la siguiente pregunta
+    inputDelUsuario.value = ''; 
 
-        // Mostrar mensaje del usuario
-        const userDiv = document.createElement('div');
-        userDiv.className = 'message user';
-        userDiv.textContent = texto;
-        chatBox.appendChild(userDiv);
-        inputDelUsuario.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-        // Llamar al servidor Flask
+    // 2. ¿El usuario escribió la palabra "dibuja"?
+    if (texto.toLowerCase().startsWith('dibuja')) {
+        
         try {
-            const response = await fetch('/ask', {
+            // Le pedimos la imagen al servidor de Flask
+            const response = await fetch('/generar-imagen', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: texto })
+                body: JSON.stringify({ prompt: texto })
+            });
+            
+            const data = await response.json();
+            // Mostramos la imagen en el chat
+            mostrarImagenEnPantalla(data.url_imagen); 
+            
+        } catch (error) {
+            console.error('Error al crear la imagen:', error);
+        }
+
+    } else {
+        // 3. Si NO dice "dibuja", es un texto normal (Como hablar con Gemini)
+        try {
+            const response = await fetch('/preguntar', { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mensaje: texto })
             });
             const data = await response.json();
             
-            // Mostrar respuesta de la IA
-            const botDiv = document.createElement('div');
-            botDiv.className = 'message bot';
-            botDiv.textContent = data.response;
-            chatBox.appendChild(botDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
+            // Aquí puedes poner tu función actual para mostrar texto en el chat
+            // Ejemplo: mostrarTextoEnPantalla(data.respuesta);
         } catch (error) {
-            console.error("Error:", error);
+            console.error('Error en el chat de texto:', error);
         }
-    });
-</script>
+    }
+});
 
-</body>
-</html>
+// ESTA FUNCIÓN PINTA LA IMAGEN EN TU CHATBOX
+function mostrarImagenEnPantalla(url) {
+    const chatBox = document.getElementById('chatBox');
+    const mensajeBot = document.createElement('div');
+    mensajeBot.classList.add('message', 'bot');
+    
+    const img = document.createElement('img');
+    img.src = url;
+    img.style.maxWidth = '100%'; 
+    img.style.borderRadius = '8px';
+    img.style.marginTop = '10px';
+    
+    mensajeBot.appendChild(img);
+    chatBox.appendChild(mensajeBot);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
