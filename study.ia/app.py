@@ -13,10 +13,16 @@ def index():
 # 1. RUTA PARA TEXTO NORMAL (Cambiamos /ask a /preguntar para que coincida con el HTML)
 @app.route('/preguntar', methods=['POST'])
 def preguntar():
-    user_message = request.json.get('menssage')
-    
+    # Comprobamos si nos llega un archivo (imagen) o solo texto
+    if 'image' in request.files:
+        # Si hay imagen, la mandamos directamente a la función de generar
+        return generar_imagen()
+        
+    user_message = request.form.get('message') or request.json.get('message') if request.is_json else request.form.get('message')
+    if not user_message:
+        user_message = request.form.get('menssage') # Por si acaso se escribió con doble 's'
+
     try:
-        # Usamos Llama 3, que es un modelo buenísimo y gratuito en Groq
         chat_completion = client.chat.completions.create(
             messages=[
                 {
@@ -26,7 +32,6 @@ def preguntar():
             ],
             model="llama-3.1-8b-instant",
         )
-        
         respuesta = chat_completion.choices[0].message.content
         return jsonify({'respuesta': respuesta})
         
