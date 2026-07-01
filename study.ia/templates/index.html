@@ -6,9 +6,9 @@
     <title>StudyIA - Tu Tutor Inteligente</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
-       .chat-container { width: 100%; max-width: 600px; height: 80vh; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px; display: flex; flex-direction: column-reverse; overflow: hidden; }
+       .chat-container { width: 100%; max-width: 600px; height: 80vh; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
         .chat-header { background: #4A90E2; color: white; padding: 20px; text-align: center; font-size: 1.2rem; font-weight: bold; display: flex; flex-direction: column; }
-        .chat-box { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .chat-box { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column-reverse; gap: 10px; }
         .message { padding: 10px 15px; border-radius: 8px; max-width: 80%; word-wrap: break-word; }
         .user { background: #E1F5FE; align-self: flex-end; color: #0277BD; }
         .bot { background: #F1F1F1; align-self: flex-start; color: #333; }
@@ -21,7 +21,7 @@
 <body>
 
 <div class="chat-container">
-    <div class="chat-header">📚 StudyIA - Panel de Control</div>
+    <div class="chat-header">📚 StudyIA - by Manuel López Amador</div>
     <div class="chat-box" id="chatBox">
         <div class="message bot">¡Hola! Soy StudyIA. ¿En qué puedo ayudarte a estudiar hoy?</div>
   <form class="chat-input-area" id="chatForm" enctype="multipart/form-data">
