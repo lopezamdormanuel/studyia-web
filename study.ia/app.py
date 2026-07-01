@@ -23,7 +23,7 @@ def ask():
                     "content": user_message,
                 }
             ],
-            model="llama3-8b-instant",
+            model="llama3.1-8b-instant",
         )
         
         respuesta = chat_completion.choices[0].message.content
