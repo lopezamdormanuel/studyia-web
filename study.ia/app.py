@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 from groq import Groq
 import urllib.parse
-
+import os 
 app = Flask(__name__)
 
 # Pega aqui tu clave gratuita entre las comillas
-client = Groq(api_key="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")
-
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 @app.route('/')
 def index():
     return render_template('index.html')
