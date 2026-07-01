@@ -39,20 +39,29 @@
         <span style="font-size: 0.8rem; color: #666;">📸 Imagen seleccionada</span>
         <button type="button" id="clearImage" style="margin-left: 10px; background: none; border: none; color: red; cursor: pointer;">❌ Quitar</button>
     </div>
-</div> <div id="previewContainer" style="display: none; padding: 10px; ...">
-        <span style="font-size: 0.8rem; color: #666;">📎 Imagen seleccionada</span>
-        <button type="button" id="clearImage" style="...">❌ Quitar</button>
-    </div>
+
 
     <script>
+    document.getElementById('chatForm').addEventListener('submit', async (e) => {
+      
+<script>
     document.getElementById('chatForm').addEventListener('submit', async (e) => {
         e.preventDefault(); 
 
         const userInput = document.getElementById('userInput');
         const imageInput = document.getElementById('imageInput');
+        const chatBox = document.getElementById('chatBox');
         
         const message = userInput.value.trim();
         if (!message && !imageInput.files[0]) return; 
+
+        if (message) {
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.innerText = message;
+            chatBox.appendChild(userDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
 
         const formData = new FormData();
         formData.append('message', message);
@@ -60,8 +69,7 @@
             formData.append('image', imageInput.files[0]);
         }
 
-        // RECUERDA: Cambia esto por la URL real de tu servidor en Render
-        const BACKEND_URL = 'https://studyia-web.onreder.com/preguntar'; 
+        const BACKEND_URL = 'https://studyia-web.onrender.com/preguntar'; 
 
         try {
             const response = await fetch(BACKEND_URL, {
@@ -70,18 +78,23 @@
             });
 
             const data = await response.json();
-            console.log("Respuesta de la IA:", data);
             
-            // Aquí puedes programar que la respuesta se pinte en el #chatBox
+            if (data.respuesta) {
+                const botDiv = document.createElement('div');
+                botDiv.className = 'message bot';
+                botDiv.innerText = data.respuesta;
+                chatBox.appendChild(botDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
             
             userInput.value = '';
             imageInput.value = ''; 
             
         } catch (error) {
-            console.error('Error al enviar el mensaje:', error);
+            console.error('Error:', error);
         }
     });
     </script>
 </body>
 </html>
-
+       
