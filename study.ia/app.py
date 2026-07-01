@@ -1,33 +1,36 @@
 from flask import Flask, render_template, request, jsonify
-from openai import OpenAI
+from groq import Groq
 
 app = Flask(__name__)
 
-# Tu API Key configurada
-client = OpenAI(api_key="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")
+# Pega aquí tu clave gratuita entre las comillas
+client = Groq(api_key="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")
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
 @app.route('/ask', methods=['POST'])
 def ask():
-    data = request.get_json()
-    user_message = data.get('message')
+    user_message = request.json.get('message')
     
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
+        # Usamos Llama 3, que es un modelo buenísimo y gratuito en Groq
+        chat_completion = client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "Eres StudyIA, una inteligencia artificial diseñada para ayudar a estudiantes. Eres un tutor experto, amigable y divertido."},
-                {"role": "user", "content": user_message}
-            ]
+                {
+                    "role": "user",
+                    "content": user_message,
+                }
+            ],
+            model="llama3-8b-8192",
         )
-        bot_response = response.choices[0].message.content
+        
+        respuesta = chat_completion.choices[0].message.content
+        return jsonify({'response': respuesta})
+        
     except Exception as e:
-        bot_response = f"Error en los créditos de OpenAI: {e}"
-
-    return jsonify({'response': bot_response})
+        return jsonify({'response': f"Error: {str(e)}"})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True)
