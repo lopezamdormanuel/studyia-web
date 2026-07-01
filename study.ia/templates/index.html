@@ -69,10 +69,10 @@ document.getElementById('chatForm').addEventListener('submit', async (e) => {
 
         const BACKEND_URL = 'https://studyia-web.onrender.com/preguntar'; 
 
-        try {
+       try {
             const response = await fetch(BACKEND_URL, {
                 method: 'POST',
-                body: formData 
+                body: formData
             });
 
             const data = await response.json();
