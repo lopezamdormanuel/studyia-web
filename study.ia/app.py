@@ -13,7 +13,7 @@ def index():
 # 1. RUTA PARA TEXTO NORMAL (Cambiamos /ask a /preguntar para que coincida con el HTML)
 @app.route('/preguntar', methods=['POST'])
 def preguntar():
-    user_message = request.json.get('mensaje')
+    user_message = request.json.get('menssage')
     
     try:
         # Usamos Llama 3, que es un modelo buenísimo y gratuito en Groq
