@@ -29,7 +29,7 @@
 
         <form class="chat-input-area" id="chatForm" enctype="multipart/form-data">
             <label for="imageInput" style="cursor: pointer; padding: 0 10px; font-size: 1.5rem; display: flex; align-items: center;">📎</label>
-            <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
             <input type="text" id="userInput" placeholder="Escribe tu pregunta o 'dibuja...'" required autocomplete="off">
             <button type="submit">Enviar</button>
         </form>
@@ -40,13 +40,11 @@
         <button type="button" id="clearImage" style="margin-left: 10px; background: none; border: none; color: red; cursor: pointer;">❌ Quitar</button>
     </div>
 
-
-    <script>
-    document.getElementById('chatForm').addEventListener('submit', async (e) => {
-      
 <script>
-    document.getElementById('chatForm').addEventListener('submit', async (e) => {
-        e.preventDefault(); 
+document.getElementById('chatForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+  
+
 
         const userInput = document.getElementById('userInput');
         const imageInput = document.getElementById('imageInput');
@@ -88,7 +86,8 @@
             }
             
             userInput.value = '';
-            imageInput.value = ''; 
+imageInput.value = '';
+document.getElementById('previewContainer').style.display = 'none';
             
         } catch (error) {
             console.error('Error:', error);
