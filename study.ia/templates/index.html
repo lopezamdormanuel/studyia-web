@@ -77,13 +77,20 @@ document.getElementById('chatForm').addEventListener('submit', async (e) => {
 
             const data = await response.json();
             
-            if (data.respuesta) {
-                const botDiv = document.createElement('div');
-                botDiv.className = 'message bot';
-                botDiv.innerText = data.respuesta;
-                chatBox.appendChild(botDiv);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
+            if (data.url_imagen) {
+    const img = document.createElement("img");
+    img.src = data.url_imagen;
+    img.style.maxWidth = "300px";
+    img.style.borderRadius = "10px";
+    chatBox.appendChild(img);
+    chatBox.scrollTop = chatBox.scrollHeight;
+} else if (data.respuesta) {
+    const botDiv = document.createElement("div");
+    botDiv.className = "message bot";
+    botDiv.innerText = data.respuesta;
+    chatBox.appendChild(botDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
             
             userInput.value = '';
 imageInput.value = '';
