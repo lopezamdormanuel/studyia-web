@@ -1,87 +1,90 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: #0f172a;
-    color: white;
-    font-family: Arial, sans-serif;
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0f172a;
+    color:white;
 }
 
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+header{
+    background:#1e293b;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 40px;
 }
 
-header {
-    background: #1e293b;
-    padding: 15px 25px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+header h1{
+    margin:0;
 }
 
-.logo {
-    font-size: 28px;
-    font-weight: bold;
+nav button{
+    margin-left:10px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:10px;
+    cursor:pointer;
 }
 
-nav button {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    margin-left: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.2s;
+.container{
+    max-width:1000px;
+    margin:30px auto;
+    padding:20px;
 }
 
-nav button:hover {
-    background: #3b82f6;
+#chat-box{
+    background:#1e293b;
+    min-height:450px;
+    border-radius:15px;
+    padding:20px;
+    overflow-y:auto;
 }
 
-#chat-box {
-    background: #1e293b;
-    border-radius: 15px;
-    padding: 20px;
-    height: 450px;
-    overflow-y: auto;
+.message{
+    padding:12px;
+    margin:12px 0;
+    border-radius:12px;
 }
 
-.message.user {
-    background: #2563eb;
-    padding: 12px;
-    border-radius: 12px;
-    margin: 10px 0;
-    text-align: right;
+.user{
+    background:#2563eb;
+    text-align:right;
 }
 
-.message.bot {
-    background: #334155;
-    padding: 12px;
-    border-radius: 12px;
-    margin: 10px 0;
+.bot{
+    background:#334155;
 }
 
-input[type="text"] {
-    width: 78%;
-    padding: 14px;
-    border-radius: 12px;
-    border: none;
-    margin-top: 15px;
+.acciones{
+    margin:20px 0;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
 }
 
-button {
-    padding: 14px 20px;
-    border-radius: 12px;
-    border: none;
-    background: #2563eb;
-    color: white;
-    cursor: pointer;
+.acciones button{
+    background:#475569;
 }
 
-button:hover {
-    background: #3b82f6;
+.entrada{
+    display:flex;
+    gap:10px;
+}
+
+.entrada input{
+    flex:1;
+    padding:15px;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
+}
+
+.entrada button{
+    background:#2563eb;
+    border:none;
+    color:white;
+    padding:15px 20px;
+    border-radius:10px;
+    cursor:pointer;
 }
